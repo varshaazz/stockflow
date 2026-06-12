@@ -1,13 +1,19 @@
 # Stockflow - Inventory & Order Management
+Stockflow is a full-stack inventory and order management application designed
+to help small businesses track products, customers, orders, and inventory
+movement from a single dashboard. The backend is built with FastAPI and
+PostgreSQL, while the frontend uses React and Vite.
 
-This is my project for the inventory/order management assignment. It's a small
-full-stack app for keeping track of products, customers and orders - basically
-a mini back-office tool for a small warehouse. Backend is FastAPI + Postgres,
-frontend is React (Vite).
+The goal was to build a simple inventory system that can be used to track products, customers and orders from a single interface.
 
-I called it "Stockflow" because I wanted the UI to feel like an actual ledger/
-stockroom tool rather than a generic admin template, so the design leans on
-that a bit (mono labels for SKUs/numbers, dashed "ticket" tags for status, etc).
+## Deployment
+
+Frontend: https://stockflow-khaki-theta.vercel.app/
+
+Backend API: https://stockflow-backend-f743.onrender.com
+
+Backend Docker Image:
+https://hub.docker.com/r/varshaazz/stockflow-backend
 
 ## What it does
 
@@ -126,23 +132,10 @@ Add `-v` if you also want to wipe the database volume.
 
 ## A few implementation notes
 
-- Stock checks happen **before** any database writes - if any line item in an
-  order doesn't have enough stock, the whole order is rejected with a 400 and
-  a list of exactly which items are short, rather than partially creating it.
-- SKU and email uniqueness are enforced both at the DB level (unique index)
-  and checked explicitly in the route handlers so the error message is
-  actually useful instead of a raw integrity error.
-- Order line items store a snapshot of `unit_price` at the time of purchase,
-  so if you change a product's price later, past orders still show what was
-  actually charged.
-- Deleting a product/customer that's referenced by existing orders is blocked
-  (409) rather than cascading - didn't want orders silently losing data.
+- Product SKUs and customer emails are unique.
+- Stock is validated before an order is created.
+- Product quantity is updated automatically after a successful order.
+- Order totals are calculated on the backend.
+- Existing orders are preserved even if products or customers are updated later.
 
-## Known limitations / things I'd add with more time
 
-- No authentication - anyone hitting the app can do anything. Fine for this
-  assignment but wouldn't ship it like this.
-- No pagination on the tables - okay for a few hundred rows, would need it
-  for a real catalog.
-- Order editing isn't supported, only status changes (pending → completed/
-  cancelled) and deletion.

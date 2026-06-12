@@ -5,7 +5,7 @@ from app.config import CORS_ORIGINS
 from app.database import Base, engine
 from app.routers import products, customers, orders
 
-# create tables on startup if they don't exist yet (fine for a small project, no migrations needed)
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Inventory & Order Management API", version="1.0.0")

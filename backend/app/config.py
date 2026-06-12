@@ -1,7 +1,4 @@
-"""
-Reads DB connection info + misc settings from environment.
-Keeping this dead simple instead of pulling in pydantic-settings - one less dependency.
-"""
+
 import os
 from dotenv import load_dotenv
 

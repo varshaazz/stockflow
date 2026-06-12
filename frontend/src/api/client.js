@@ -1,5 +1,4 @@
-// Small fetch wrapper - keeps all the JSON/error handling boilerplate in one spot
-// so the page components can just call api.get(...) etc and not think about it.
+
 
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 

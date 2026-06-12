@@ -8,7 +8,7 @@ router = APIRouter(prefix="/api/orders", tags=["orders"])
 
 
 def _serialize_order(order: models.Order) -> schemas.OrderOut:
-    """Build the response object including derived fields (customer name, total, item names)."""
+    
     items_out = []
     total = 0.0
     for item in order.items:
